@@ -47,6 +47,3 @@ end
 input = ARGF.readlines.map(&:chomp)
 part1(input)
 part2(input)
-
-
-
