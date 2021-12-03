@@ -1,6 +1,6 @@
 use std::fs::*;
 
-fn part1(values: &Vec<u32>) -> u32{
+fn part1(values: &Vec<u32>) -> u32 {
     let mut increase_count : u32 = 0;
     let mut prev : u32 = u32::MIN;
     for current in values {
