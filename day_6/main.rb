@@ -1,22 +1,13 @@
-h = Hash.new(0) # hash tracks number of fish at each possible age
-ARGF.readlines.map(&:chomp)[0].split(",").map(&:to_i).each do |v|
-    h[v] += 1
-end
+# hash tracks number of fish at each possible age
+h = ARGF.readlines.map(&:chomp)[0].split(",").map(&:to_i).tally 
+h.default = 0
 
 # iterate through 256 days
-(1..256).each do |i|
-    num_to_push = h[0]
-    (1..8).each do |v|
-        h[v-1] = h[v]
-    end
-    h[6] += num_to_push
-    h[8] = num_to_push
-    if i == 80 then 
-        sum = 0
-        h.each do |k, v| sum += v end
-        puts "Part 1: %d fish\n" % [sum] 
-    end
+256.times do |i|
+    h.transform_keys! { |x| x-1 }
+    h[8] = h[-1]
+    h[6] += h[-1]
+    h[-1] = 0
+    if i == 79 then puts "Part 1: %d fish\n" % [h.values.compact.sum] end # print part1 at 80th iteration (i=79)
 end
-sum = 0
-h.each do |k, v| sum += v end
-puts "Part 2: %d fish\n" % [sum] 
+puts "Part 2: %d fish\n" % [h.values.compact.sum] 
